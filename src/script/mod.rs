@@ -158,6 +158,7 @@ impl Script {
         recipe_dir: &Path,
         jinja_context: Option<Jinja>,
         extensions: &[&str],
+        env_vars: Option<&IndexMap<String, String>>,
     ) -> Result<ResolvedScriptContents, std::io::Error> {
         let script_content = match self.contents() {
             // No script was specified, so we try to read the default script. If the file cannot be
@@ -216,14 +217,14 @@ impl Script {
         };
 
         // render jinja if it is an inline script
-        if let Some(jinja_context) = jinja_context {
+        if let Some(mut jinja_context) = jinja_context {
             match script_content? {
                 ResolvedScriptContents::Inline(script) => {
-                    for (k, v) in env_vars {
-                        if let Some(v) = v {
+                    if let Some(env_vars) = env_vars {
+                        for (k, v) in env_vars {
                             jinja_context
                                 .context_mut()
-                                .insert(k, Value::from_safe_string(v));
+                                .insert(k.clone(), Value::from_safe_string(v.clone()));
                         }
                     }
                     let (rendered, _) = jinja_context.render_str(&script).map_err(|e| {
@@ -286,14 +287,14 @@ impl Script {
             valid_script_extensions.push("nu");
         }
 
-        let env_vars = env_vars
+        let environment_vars = env_vars
             .into_iter()
             .filter_map(|(k, v)| v.map(|v| (k, v)))
             .chain(self.env().clone().into_iter())
             .collect::<IndexMap<String, String>>();
 
         // Get the contents of the script.
-        for (k, v) in &env_vars {
+        for (k, v) in &environment_vars {
             jinja_config.as_mut().map(|jinja| {
                 jinja
                     .context_mut()
@@ -301,7 +302,12 @@ impl Script {
             });
         }
 
-        let contents = self.resolve_content(recipe_dir, jinja_config, &valid_script_extensions)?;
+        let contents = self.resolve_content(
+            recipe_dir,
+            jinja_config,
+            &valid_script_extensions,
+            Some(&environment_vars),
+        )?;
 
         // Select a different interpreter if the script is a nushell script.
         if contents
@@ -340,7 +346,7 @@ impl Script {
 
         let exec_args = ExecutionArgs {
             script: contents,
-            env_vars,
+            env_vars: environment_vars,
             secrets,
             build_prefix: build_prefix.map(|p| p.to_owned()),
             run_prefix: run_prefix.to_owned(),
@@ -417,6 +423,12 @@ impl Output {
                 &self.build_configuration.directories.recipe_dir,
                 Some(jinja.clone()),
                 if cfg!(windows) { &["bat"] } else { &["sh"] },
+                Some(
+                    &env_vars
+                        .iter()
+                        .filter_map(|(k, v)| v.as_ref().map(|v| (k.clone(), v.clone())))
+                        .collect::<IndexMap<String, String>>(),
+                ),
             )?,
             env_vars: env_vars
                 .into_iter()

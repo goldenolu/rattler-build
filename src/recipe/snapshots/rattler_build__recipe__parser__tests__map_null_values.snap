@@ -9,7 +9,7 @@ package:
   version: 0.1.0
 build:
   number: 0
-  script: "${{ \"echo 'world'\" if true }}"
+  script: "echo 'world'"
   prefix_detection:
     force_file_type:
       binary:

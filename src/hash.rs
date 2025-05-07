@@ -64,7 +64,7 @@ impl Formatter for PythonFormatter {
     where
         W: ?Sized + std::io::Write,
     {
-        writer.write_all(b": ")
+        writer.write_all(b":")
     }
 }
 

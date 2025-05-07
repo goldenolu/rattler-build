@@ -56,7 +56,7 @@ pub struct Jinja {
 }
 
 /// If we have a template that is _only_ an expression, we want to strip the
-/// `${{` and `}}` from it so that we can evaluate it as an expression instead of
+/// `${{` and `}}` from it, so that we can evaluate it as an expression instead of
 /// rendering it as a string.
 ///
 /// The function checks for:

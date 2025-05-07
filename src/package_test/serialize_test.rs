@@ -92,6 +92,7 @@ pub(crate) fn write_test_files(
                 &output.build_configuration.directories.recipe_dir,
                 Some(default_jinja_context(output)),
                 &["sh", "bat"],
+                None,
             )?;
 
             // Replace with rendered contents

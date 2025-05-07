@@ -1081,7 +1081,7 @@ mod tests {
 
         let jinja = Jinja::new(options);
 
-        assert!(jinja.eval("${{ true if win }}").expect("test 1").is_true());
+        assert!(jinja.eval("${{ true if win else false }}").expect("test 1").is_true());
     }
 
     #[test]

@@ -219,6 +219,13 @@ impl Script {
         if let Some(jinja_context) = jinja_context {
             match script_content? {
                 ResolvedScriptContents::Inline(script) => {
+                    for (k, v) in env_vars {
+                        if let Some(v) = v {
+                            jinja_context
+                                .context_mut()
+                                .insert(k, Value::from_safe_string(v));
+                        }
+                    }
                     let (rendered, _) = jinja_context.render_str(&script).map_err(|e| {
                         std::io::Error::new(
                             std::io::ErrorKind::Other,

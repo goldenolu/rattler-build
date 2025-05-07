@@ -152,7 +152,7 @@ impl Recipe {
             )]
         })?;
         // val.render(jinja, &format!("context.{}", k.as_str()))?;
-        let (value, can_coerce) = jinja.render_to_value(&val).unwrap();
+        let (value, can_coerce) = jinja.render_to_value(val).unwrap();
 
         // See if we have to coerce a string-type to a boolean or integer
         if can_coerce && value.as_str().is_some() {
@@ -160,14 +160,14 @@ impl Recipe {
             let stringified = value.to_string();
             if let Some(boolean) = string_to_bool(&stringified) {
                 return Ok(Some(Variable::from(boolean)));
-            } else if let Some(integer) = stringified.parse::<i64>().ok() {
+            } else if let Ok(integer) = stringified.parse::<i64>() {
                 return Ok(Some(Variable::from(integer)));
             } else {
                 return Ok(Some(Variable::from_string(&stringified)));
             }
         }
         // TODO handle null
-        return Ok(Some(Variable::from_value(value)));
+        Ok(Some(Variable::from_value(value)))
         // if let Some(rendered) = rendered {
         //     let variable = if let Some(value) = rendered.as_bool() {
         //         Variable::from(value)

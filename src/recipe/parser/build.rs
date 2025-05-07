@@ -194,7 +194,7 @@ impl TryConvertNode<BuildString> for RenderedNode {
 
 impl TryConvertNode<BuildString> for RenderedScalarNode {
     fn try_convert(&self, _name: &str) -> Result<BuildString, Vec<PartialParsingError>> {
-        Ok(BuildString::UserSpecified(self.source().to_string()))
+        Ok(BuildString::UserSpecified(self.as_str().to_string()))
     }
 }
 

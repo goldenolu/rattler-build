@@ -156,8 +156,7 @@ impl RenderedNode {
             minijinja::value::ValueKind::Seq => {
                 let mut rendered: Vec<RenderedNode> = Vec::new();
                 for elem in value.try_iter().unwrap() {
-                    let node =
-                        RenderedNode::from_jinja_value(source.clone(), elem, span, true)?;
+                    let node = RenderedNode::from_jinja_value(source.clone(), elem, span, true)?;
                     rendered.push(node);
                 }
                 Ok(RenderedNode::Sequence(RenderedSequenceNode::from(rendered)))

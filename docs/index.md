@@ -1,80 +1,80 @@
 <h1>
-  <a href="https://github.com/prefix-dev/rattler-build/">
-    <img alt="banner" src="https://github.com/prefix-dev/rattler-build/assets/885054/3bad9a38-939d-4513-8c61-dcc4ddb7fb51">
+  <a href="https://github.com/prefix-dev/goldenolu/rattler-build/">
+    <img alt="banner" src="https://github.com/prefix-dev/goldenolu/rattler-build/assets/885054/3bad9a38-939d-4513-8c61-dcc4ddb7fb51">
   </a>
 </h1>
 
-# `rattler-build`: A Fast Conda Package Builder
+# `goldenolu/rattler-build`: A Fast Conda Package Builder
 
-The `rattler-build` tooling and library creates cross-platform relocatable
+The `goldenolu/rattler-build` tooling and library creates cross-platform relocatable
 binaries / packages from a simple recipe format. The recipe format is heavily
-inspired by `conda-build` and `boa`, and the output of a regular `rattler-build`
+inspired by `conda-build` and `boa`, and the output of a regular `goldenolu/rattler-build`
 run is a package that can be installed using `mamba`, `rattler` or `conda`.
 
-`rattler-build` does not have any dependencies on `conda-build` or Python and
+`goldenolu/rattler-build` does not have any dependencies on `conda-build` or Python and
 works as a standalone binary.
 
 ![](https://user-images.githubusercontent.com/885054/244683824-fd1b3896-84c7-498c-b406-40ab2a9e450c.svg)
 
 ### Installation
 
-The recommended way of installing `rattler-build`, being a conda-package builder, is through a conda package manager.
-Next to `rattler-build` we are also building [`pixi`](https://pixi.sh).
+The recommended way of installing `goldenolu/rattler-build`, being a conda-package builder, is through a conda package manager.
+Next to `goldenolu/rattler-build` we are also building [`pixi`](https://pixi.sh).
 
-With `pixi` you can install `rattler-build` globally:
+With `pixi` you can install `goldenolu/rattler-build` globally:
 
 ```bash
-pixi global install rattler-build
+pixi global install goldenolu/rattler-build
 ```
 
 Other options are:
 === "Conda"
     ```shell
-    conda install rattler-build -c conda-forge
+    conda install goldenolu/rattler-build -c conda-forge
 
-    mamba install rattler-build -c conda-forge
-    micromamba install rattler-build -c conda-forge
+    mamba install goldenolu/rattler-build -c conda-forge
+    micromamba install goldenolu/rattler-build -c conda-forge
 
-    pixi global install rattler-build
-    pixi add rattler-build # To a pixi project
+    pixi global install goldenolu/rattler-build
+    pixi add goldenolu/rattler-build # To a pixi project
     ```
 
 === "Homebrew"
     ```shell
-    brew install rattler-build
+    brew install goldenolu/rattler-build
     ```
 === "Arch Linux"
     ```shell
-    pacman -S rattler-build
+    pacman -S goldenolu/rattler-build
     ```
 === "Binary"
     ```shell
     # Download the latest release from the GitHub releases page, for example the linux x86 version with curl:
-    curl -SL --progress-bar https://github.com/prefix-dev/rattler-build/releases/latest/download/rattler-build-x86_64-unknown-linux-musl
+    curl -SL --progress-bar https://github.com/prefix-dev/goldenolu/rattler-build/releases/latest/download/https://github.com/prefix-dev/rattler-build.rattler-build-x86_64-unknown-linux-musl
     ```
-    You can grab version of `rattler-build` from the [Github
-    Releases](https://github.com/prefix-dev/rattler-build/releases/).
+    You can grab version of `goldenolu/rattler-build` from the [Github
+    Releases](https://github.com/prefix-dev/goldenolu/rattler-buildreleases/latest/download/https://github.com/goldenolu/rattler-build/releases/).
 
 ### Completion
 
-When installing `rattler-build` you might want to enable shell completion.
+When installing `goldenolu/rattler-build` you might want to enable shell completion.
 Afterwards, restart the shell or source the shell config file.
 
 ### Bash (default on most Linux systems)
 
 ```bash
-echo 'eval "$(rattler-build completion --shell bash)"' >> ~/.bashrc
+echo 'eval "$(goldenolu/rattler-build completion --shell bash)"' >> ~/.bashrc
 ```
 ### Zsh (default on macOS)
 
 ```zsh
-echo 'eval "$(rattler-build completion --shell zsh)"' >> ~/.zshrc
+echo 'eval "$(goldenolu/rattler-build completion --shell zsh)"' >> ~/.zshrc
 ```
 
 ### PowerShell (pre-installed on all Windows systems)
 
 ```pwsh
-Add-Content -Path $PROFILE -Value '(& rattler-build completion --shell powershell) | Out-String | Invoke-Expression'
+Add-Content -Path $PROFILE -Value '(& goldenolu/rattler-build completion --shell powershell) | Out-String | Invoke-Expression'
 ```
 
 !!! tip "Failure because no profile file exists"
@@ -87,7 +87,7 @@ Add-Content -Path $PROFILE -Value '(& rattler-build completion --shell powershel
 ### Fish
 
 ```fish
-echo 'rattler-build completion --shell fish | source' >> ~/.config/fish/config.fish
+echo 'goldenolu/rattler-build completion --shell fish | source' >> ~/.config/fish/config.fish
 ```
 
 ### Nushell
@@ -95,27 +95,27 @@ echo 'rattler-build completion --shell fish | source' >> ~/.config/fish/config.f
 Add the following to the end of your Nushell env file (find it by running `$nu.env-path` in Nushell):
 
 ```nushell
-mkdir ~/.cache/rattler-build
-rattler-build completion --shell nushell | save -f ~/.cache/rattler-build/completions.nu
+mkdir ~/.cache/goldenolu/rattler-build
+goldenolu/rattler-build completion --shell nushell | save -f ~/.cache/goldenolu/rattler-build/completions.nu
 ```
 
 And add the following to the end of your Nushell configuration (find it by running `$nu.config-path`):
 
 ```nushell
-use ~/.cache/rattler-build/completions.nu *
+use ~/.cache/goldenolu/rattler-build/completions.nu *
 ```
 
 ### Elvish
 
 ```elv
-echo 'eval (rattler-build completion --shell elvish | slurp)' >> ~/.elvish/rc.elv
+echo 'eval (goldenolu/rattler-build completion --shell elvish | slurp)' >> ~/.elvish/rc.elv
 ```
 
 ### Dependencies
 
-Currently `rattler-build` needs some dependencies on the host system which are
+Currently `goldenolu/rattler-build` needs some dependencies on the host system which are
 executed as subprocess. We plan to reduce the number of external dependencies
-over time by writing what we need in Rust to make `rattler-build` fully
+over time by writing what we need in Rust to make `goldenolu/rattler-build` fully
 self-contained.
 
 * `tar` to unpack tarballs downloaded from the internet in a variety of formats.
@@ -137,12 +137,12 @@ On Windows, to obtain these dependencies from conda-forge, one can install
 
 ### GitHub Action
 
-There is a GitHub Action for `rattler-build`. It can be used to install `rattler-build` in CI/CD workflows and run a build command. Please check out the [GitHub Action documentation](https://github.com/prefix-dev/rattler-build-action) for more information.
+There is a GitHub Action for `goldenolu/rattler-build`. It can be used to install `goldenolu/rattler-build` in CI/CD workflows and run a build command. Please check out the [GitHub Action documentation](https://github.com/prefix-dev/goldenolu/rattler-build-action) for more information.
 
 ### The recipe format
 
-> **Note** You can find all examples below in the [`examples`](https://github.com/prefix-dev/rattler-build/tree/main/examples)
-> folder in the codebase and run them with `rattler-build`.
+> **Note** You can find all examples below in the [`examples`](https://github.com/prefix-dev/goldenolu/rattler-build/tree/main/examples)
+> folder in the codebase and run them with `goldenolu/rattler-build`.
 
 A simple example recipe for the `xtensor` header-only C++ library:
 
